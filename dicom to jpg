@@ -1,0 +1,22 @@
+import pydicom
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+
+fig = plt.figure()
+
+path = '' #the location of DICOM images on disk
+
+for s in os.listdir(path):
+ path1 = path + '/' + s
+ mr = [pydicom.read_file(path1 + '/' + f) for f in os.listdir(path1)]
+ for i in range(len(mr)):
+  image = np.stack([mr[i].pixel_array])
+  image = image.squeeze() 
+  plt.imshow(image, cmap='gray')
+  plt.show
+  a = str(i)
+  path2 = path1 + '/' + a +'.jpg'
+  fig.savefig(path2,dpi=800)
+
+  
